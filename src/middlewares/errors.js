@@ -1,18 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 
-export const notFound = (req, res) => {
-  return res.status(404).send("Route does not exist");
-};
-
-export class NotFoundError extends Error {
-  constructor(message) {
-    super(message)
-    this.statusCode = StatusCodes.NOT_FOUND
-  }
-}
-
 export const errorHandler = (err, req, res, next) => {
-  console.log(err.message);
   const defaultError = {
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: err.message || "Something went wrong, try again later",
@@ -27,7 +15,9 @@ export const errorHandler = (err, req, res, next) => {
 
   if (err.code && err.code === 11000) {
     defaultError.statusCode = StatusCodes.BAD_REQUEST;
-    defaultError.msg = `${Object.keys(err.keyValue)} field has to be unique`;
+    // TODO: resolve this duplicate field
+    // defaultError.msg = `${Object.keys(err.keyValue)} field has to be unique`;
+    defaultError.msg = `duplicate field has to be unique`;
   }
 
   res.status(defaultError.statusCode).json({
