@@ -16,17 +16,18 @@ It contains a complete sample CRUD operation.
 `npm run dev`
 
 # Some Routes
-`Get: http://localhost:5000/api/v1/books`
-`
-  Post: http://localhost:5000/api/v1/users/auth/register
+
+
+- `Get: http://localhost:5000/api/v1/books`
+
+- `Post: http://localhost:5000/api/v1/users/auth/register
   body {
     name
     email
     password
   }
 `
-`
-  Post: http://localhost:5000/api/v1/users/auth/login
+- `Post: http://localhost:5000/api/v1/users/auth/login
   body {
     email
     password
