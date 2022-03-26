@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
-import { NotFoundError } from "../middlewares/errors.js";
 import { Book } from "../models/book.js";
+import { NotFoundError } from "../utils/errors.js";
 
 export const findAll = async (req, res) => {
   const books = await Book.find();
@@ -12,7 +12,6 @@ export const findAll = async (req, res) => {
 
 export const create = async (req, res) => {
   const book = await Book.create(req.body);
-  res.status(201).json({ book });
   res.status(StatusCodes.CREATED).json({
     success: true,
     data: book,

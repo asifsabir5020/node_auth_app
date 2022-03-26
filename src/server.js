@@ -5,8 +5,10 @@ dotEnv.config();
 import morgan from "morgan";
 import 'express-async-errors';
 import { connectDB } from "./db/connection.js";
+import { errorHandler } from "./middlewares/errors.js";
 import { bookRouter } from './routers/book.js';
-import { notFound, errorHandler } from "./middlewares/errors.js";
+import { authRouter } from "./routers/auth.js";
+import { NotFoundError } from "./utils/errors.js";
 
 // as this is helpful in development
 if(process.env.NODE_ENV === 'development'){
@@ -15,11 +17,14 @@ if(process.env.NODE_ENV === 'development'){
 
 app.use(express.json());
 
+app.use('/api/v1/users', authRouter);
 app.use('/api/v1/books', bookRouter);
 
 
 //middleware for not found 404
-app.use(notFound);
+app.all('*', (req, res, next) => {
+    throw new NotFoundError(`${req.originalUrl} route not found`);
+});
 
 app.use(errorHandler);
 
